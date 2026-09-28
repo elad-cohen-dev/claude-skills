@@ -13,6 +13,7 @@ Keep `_shared/` alongside the skills — several reference `../_shared/reference
 
 ## Skills
 
+- **backend-python** — House rules for FastAPI/Pydantic/dependency-injector backend services and their pytest suites.
 - **code-review-default** — Review a GitHub PR with inline comments.
 - **codepilot-be-nestjs** — Autonomous NestJS backend feature development from a Jira ticket — analyzing the Nest project, designing API architecture, implementing controllers/services/modules/DTOs, writing Jest unit tests, validating, and committing.
 - **codepilot-be-nextjs** — Autonomous Next.
@@ -35,4 +36,5 @@ Keep `_shared/` alongside the skills — several reference `../_shared/reference
 ## Configuration
 
 - `confluence`: set `CONFLUENCE_BASE_URL`, `CONFLUENCE_EMAIL`, `CONFLUENCE_TOKEN`.
+- `backend-python`: replace `your_pkg` / `your_app` imports and `apps/<app>` paths with your own.
 - `_shared/references/sourcegraph-search.md`: replace the `your-org/*` golden repos with your own.
