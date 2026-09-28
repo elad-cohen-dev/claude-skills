@@ -177,6 +177,20 @@ Colours: `Red`, `Yellow`, `Green`, `Blue`, `Grey`
 </ac:structured-macro>
 ```
 
+## Attachments and inline images
+
+The Atlassian MCP connector can't upload files, so use REST for anything that involves an attachment.
+
+- **Upload** (new file): `curl -X POST -H "X-Atlassian-Token: no-check" -F "file=@x.png" -F "minorEdit=true" .../rest/api/content/<PAGE_ID>/child/attachment`
+- **Replace** an existing file: POST to `.../child/attachment/<ATTACHMENT_ID>/data`. First look the id up with `GET .../child/attachment?filename=x.png`.
+- **Embed inline:** `<ac:image ac:align="center" ac:width="1200"><ri:attachment ri:filename="x.png" /></ac:image>`
+- **Diagrams in HLDs and design docs:** always use the `excalidraw-diagrams` skill. It draws Excalidraw scenes, renders PNGs, and uploads and embeds them with `scripts/confluence_embed.py`. Don't use Mermaid code blocks or excalidraw.com share links: smart cards strip their `#json` fragment.
+- **Once a page has attachment images**, edit it via the storage API or the MCP with `contentFormat: "html"`, after a fresh fetch. A markdown re-publish can drop the images.
+
+## Auth troubleshooting
+
+HTTP 401 (Jira) or 403 "Current user not permitted to use Confluence" means the token is expired or revoked. Ask the user to create a new API token at https://id.atlassian.com/manage-profile/security/api-tokens and update `CONFLUENCE_TOKEN` in `~/.zshrc`. They should do it themselves; never ask for the token in chat.
+
 ## Important Notes
 
 - Always escape `&` as `&amp;`, `<` as `&lt;`, `>` as `&gt;` in text content (NOT in XML tags)

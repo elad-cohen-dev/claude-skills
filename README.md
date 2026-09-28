@@ -24,6 +24,7 @@ Keep `_shared/` alongside the skills — several reference `../_shared/reference
 - **codepilot-ui** — Frontend feature-development router.
 - **confluence** — Create, update, and search Confluence pages.
 - **devloop** — Unified development orchestrator that combines Jira/Figma integration (from codepilot) with iterative quality loops (from trycycle).
+- **excalidraw-diagrams** — Draw architecture/sequence diagrams as Excalidraw scenes, render them to PNG with Excalidraw's own exporter (Playwright), and embed them inline in Confluence with the editable `.excalidraw` source attached.
 - **epic-breakdown** — Break a Jira epic (or a pair of related epics) into a complete, right-sized set of child tickets, or review and refine an epic's existing children.
 - **feature-composer** — Transform a PRD document, prototype URL, and empty Jira epic into a fully structured, ticketed implementation plan.
 - **frontend-patterns** — Angular frontend development patterns, conventions, and best practices.
@@ -35,6 +36,8 @@ Keep `_shared/` alongside the skills — several reference `../_shared/reference
 
 ## Configuration
 
-- `confluence`: set `CONFLUENCE_BASE_URL`, `CONFLUENCE_EMAIL`, `CONFLUENCE_TOKEN`.
+- `confluence`, `excalidraw-diagrams`: set `CONFLUENCE_BASE_URL`, `CONFLUENCE_EMAIL`, `CONFLUENCE_TOKEN`.
+- `excalidraw-diagrams`: rendering needs Node + `playwright` (with Chromium) in the directory you run `render.mjs` from, and network access to esm.sh/unpkg.
+- `epic-breakdown`: Jira custom-field ids (Team, QA to verify, story points) are site-specific; adjust them to your instance.
 - `backend-python`: replace `your_pkg` / `your_app` imports and `apps/<app>` paths with your own.
 - `_shared/references/sourcegraph-search.md`: replace the `your-org/*` golden repos with your own.

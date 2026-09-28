@@ -55,7 +55,8 @@ Relevant Modules, Components & Services
 [Existing and new code involved]
 
 Data Flow & Interactions
-[How data moves through the system for this feature]
+[How data moves through the system for this feature. Needs a diagram? Use the
+ `excalidraw-diagrams` skill (Excalidraw → PNG, embedded inline), never Mermaid or ASCII art.]
 
 Security & Validation Notes
 [Auth checks, input validation, sensitive data handling]

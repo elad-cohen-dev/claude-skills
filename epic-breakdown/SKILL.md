@@ -90,14 +90,8 @@ Figma: [<frame name>](<url>) ...   (UI tickets)
 ```
 
 4. **New tickets:** `createJiraIssue` with `issueTypeName: Task` and `parent: <epic>`. Set both required custom fields in `additional_fields`, or the create fails:
-   - Team, `customfield_10001`, as a **plain string** id. The ids are:
-     - Platform `bab1ddec-6991-4697-b524-91a0db0d3a39`
-     - Impala `8bc58574-4c7c-4671-9590-87e35f0b0056`
-     - DevOps `2a614fbc-e89d-49f2-ab0c-c2de71318d8c`
-     - Crypto Team `2d826e0c-332c-483c-a084-898d0029f248`
-     - Applications `737548dc-0eb9-4a44-8484-12d8cdf60570`
-     - Origins `e2db9fdb-a4b7-4c57-bb7f-3c65b78235c9`
-     - Foundations `2c6b68c3-d9c9-46dd-a968-db967648bfb1`
+   - Team, `customfield_10001`, as a **plain string** id. Team ids are site-specific: read them from an
+     existing ticket (`getJiraIssue fields=["*all"] expand=names`) and keep them in your own notes/memory.
    - QA to verify, `customfield_11360`, as `{"value": "Yes"}` or `{"value": "No"}`. Match what sibling tickets use.
    - Don't put `&amp;` in summaries; write "and".
 5. **Links:** use `createIssueLink` with `type: "Blocks"`, **`inwardIssue` = the blocker** and `outwardIssue` = the blocked ticket. Create the first link, `getJiraIssue fields=["issuelinks"]` on the blocked ticket, and confirm it shows the blocker as `inwardIssue` before creating the rest.
