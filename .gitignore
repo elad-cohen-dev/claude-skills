@@ -3,3 +3,5 @@ __pycache__/
 *.excalidraw
 *.png
 .render-excal.mjs
+team-lead.yaml
+.DS_Store

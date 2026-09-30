@@ -1,0 +1,50 @@
+identity:
+  name: "Your Name"
+  jira_account_id: ""        # from atlassianUserInfo
+  github_login: ""           # the login that reviews PRs at work
+  slack_user_id: ""
+
+jira:
+  site: "yourcompany.atlassian.net"
+  cloud_id: ""               # from getAccessibleAtlassianResources
+  project_keys: ["ABC"]
+  scope:                     # how to narrow a shared sprint down to YOUR team
+    mode: "team"             # team | assignee | component | label | jql | project
+    team_field: "Team[Team]"
+    team_ids: []
+    assignees: []
+    component: ""
+    label: ""
+    jql_extra: ""
+  sprint_field: "customfield_10020"
+  sprint_mode: "scrum"       # scrum | kanban
+  stale_days: 3
+  high_priorities: ["Highest", "High"]
+
+github:
+  account: ""                # OPTIONAL: gh account to read as (multi-account machines)
+  org: "your-org"
+  repos: ["repo-a", "repo-b"]
+  protected_branches: ["main", "master"]
+  stale_pr_days: 2
+  large_pr_lines: 600        # OPTIONAL: additions+deletions above this = "oversized"
+
+slack:
+  enabled: false
+  team_channels: []          # where nudges / triage replies would go
+
+team:
+  - name: "Teammate One"
+    jira_account_id: ""
+    github_login: ""
+    slack_user_id: ""
+
+bug_triage:                  # OPTIONAL — only bug-triage reads this
+  jira_project: "ABC"        # defaults to jira.project_keys[0]
+  issue_type: "Bug"
+  labels: ["triage"]
+  local_paths: {}            # repo -> local clone, e.g. {repo-a: ~/dev/repo-a}
+  severity_field: ""         # custom field for severity; blank = map to priority
+
+risk_policy:
+  never: ["merge_pull_request", "close_pull_request", "transition_jira_issue"]

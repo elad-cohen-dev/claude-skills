@@ -89,10 +89,9 @@ Figma: [<frame name>](<url>) ...   (UI tickets)
 * Blocks [KEY](url).
 ```
 
-4. **New tickets:** `createJiraIssue` with `issueTypeName: Task` and `parent: <epic>`. Set both required custom fields in `additional_fields`, or the create fails:
-   - Team, `customfield_10001`, as a **plain string** id. Team ids are site-specific: read them from an
-     existing ticket (`getJiraIssue fields=["*all"] expand=names`) and keep them in your own notes/memory.
-   - QA to verify, `customfield_11360`, as `{"value": "Yes"}` or `{"value": "No"}`. Match what sibling tickets use.
+4. **New tickets:** `createJiraIssue` with `issueTypeName: Task` and `parent: <epic>`. Set the required custom fields in `additional_fields`, or the create fails:
+   - Team (usually `customfield_10001`), as a **plain string** id. Don't hard-code ids: read the Team value off a sibling ticket in the same epic (or ask the user once) and reuse that id.
+   - Any other field your site requires on create (e.g. a "QA to verify" select). Find the ids with `getJiraIssueTypeMetaWithFields`, or copy the shape from a sibling ticket, and match what siblings use.
    - Don't put `&amp;` in summaries; write "and".
 5. **Links:** use `createIssueLink` with `type: "Blocks"`, **`inwardIssue` = the blocker** and `outwardIssue` = the blocked ticket. Create the first link, `getJiraIssue fields=["issuelinks"]` on the blocked ticket, and confirm it shows the blocker as `inwardIssue` before creating the rest.
 6. After a new ticket gets its key, go back and replace placeholder mentions ("the infra ticket") in the other descriptions with the real link.
@@ -101,7 +100,7 @@ Figma: [<frame name>](<url>) ...   (UI tickets)
 
 - **Don't edit Done tickets.** Reference them as "already built" instead.
 - **Don't change assignees or priority.**
-- **Story points** (`customfield_10024`, a plain number; the convention is 1 SP = 1 day of work):
+- **Story points** (the site's story-points field — find its id from a sibling ticket or the create metadata; a plain number; the convention is 1 SP = 1 day of work):
   - By default, recommend estimates in the summary, e.g. flag 1 SP for a change that touches every vertical.
   - When the user asks for estimates, set them on every non-Done ticket. Size from the scope: count the endpoints, the surfaces × verticals touched, the tests, and the SaaS + on-prem variants. Read them back with a JQL query, because the edit response doesn't show custom fields.
   - Report the before and after values, the remaining total, and the critical path.
