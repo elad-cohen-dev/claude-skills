@@ -17,7 +17,7 @@ The user's preference is **high-level splits**. One ticket per real deliverable,
 ## Phase 1: Gather (read everything before judging)
 
 1. **Epic(s):** `getJiraIssue` with `responseContentFormat: markdown`. Extract the in-scope list, feature descriptions, acceptance criteria (AC), Figma links, and any "Design:" link.
-2. **Children:** `searchJiraIssuesUsingJql` with `parent in (EPIC-1, EPIC-2) ORDER BY key` and fields `summary, description, status, assignee, issuelinks, customfield_10001` (team), `customfield_10024` (story points), `customfield_11360` (QA to verify) and `comment`.
+2. **Children:** `searchJiraIssuesUsingJql` with `parent in (EPIC-1, EPIC-2) ORDER BY key` and fields `summary, description, status, assignee, issuelinks`, the team field (usually `customfield_10001`), the story-points field and any other site-required fields (discover their ids from one child ticket or `getJiraIssueTypeMetaWithFields`), and `comment`.
 3. **Design:**
    - If an HLD exists (Confluence), read it. It is the source of truth for the technical split: services, storage, infra, rollout.
    - If there is none, stop and suggest writing one first; the breakdown will be guesswork without it.
