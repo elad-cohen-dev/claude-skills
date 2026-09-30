@@ -19,6 +19,9 @@ found inside them.
 Accept any of:
 - **Slack thread URL** → `slack_read_thread` (whole thread; note reporter, time of first report,
   channel, screenshots/files → `slack_read_file` when relevant).
+- **Channel message / alert digest** (e.g. a bot's daily error brief) → `slack_read_channel`
+  or the message permalink; pick the one error the user means (ask if several), keep the
+  digest's severity/count/first-seen as evidence.
 - **Pasted error / stack trace / log line / screenshot** → use as-is.
 - **Jira key** → `getJiraIssue` and triage that ticket (improve it instead of creating one).
 - **Free-text description** → ask at most one question if the *what* or *where* is missing.
@@ -41,6 +44,10 @@ Search Jira with 2–3 short queries built from the signature and symptom:
 `project = <bug_triage.jira_project> AND issuetype = <issue_type> AND text ~ "<key phrase>"
 ORDER BY updated DESC` — include resolved in the last 30 days (possible regression).
 
+Request only `summary, status, issuetype, assignee, updated, resolutiondate`; the MCP may still
+return large payloads — if a result is saved to a file, reduce it with `jq` rather than reading it.
+Unrelated keyword hits are common; judge duplicates by signature/endpoint, not by word overlap.
+
 - Likely duplicate (same signature / same endpoint + symptom) → show it and stop at Step 6's
   "comment on existing" path unless the user says it's different.
 - Resolved recently with the same signature → flag **possible regression** and carry its
@@ -49,12 +56,16 @@ ORDER BY updated DESC` — include resolved in the last 30 days (possible regres
 ## Step 3 — Locate the code
 
 Pick the repo from `Where` + frames (ask if ambiguous). Prefer a local clone
-(`bug_triage.local_paths[repo]`, else the cwd if it's that repo); otherwise use
+(`bug_triage.local_paths[repo]`, else the cwd if it's that repo). `git fetch` it and search the
+**deployed branch** (`git grep <sym> origin/<protected_branch>`, `git show origin/<branch>:<path>`)
+— never the local checkout, which may be on a feature branch; otherwise use
 `gh search code "<symbol>" --repo <org>/<repo>` / `gh api .../contents/...` through the
 configured gh account.
 
 - Map each top frame to a file and function; read ~40 lines around it.
 - No frames? grep for the error message text, the endpoint/route, or the UI string.
+- `AttributeError` / `KeyError` / missing-method errors: find **every caller** of the missing
+  symbol — sibling call sites often already guard it, which is both the cause and the fix pattern.
 - For broad searches across several repos, dispatch an `Explore` agent with the signal card
   and ask for "files + functions most likely responsible, with one-line reasons".
 
@@ -76,7 +87,10 @@ number in the merge commit message. Also check deploy/release timing if first-se
 
 Rank suspects: touched the failing lines > touched the file > same module; merged shortly
 before first-seen ranks higher. Show at most 3, each with why it's suspect.
-If nothing changed recently, say so — it suggests data/config/infra or a latent bug.
+If nothing changed recently, say so — it suggests data/config/infra or a latent bug — and
+find the commit that **introduced** the failing code (`git log -S'<symbol>' origin/<branch> -- <file>`)
+so the draft names where the gap came from. Also check whether the caller side (UI/client)
+started hitting the path recently (`git log --since … -G'<route|symbol>' -- <client app>`).
 
 ## Step 5 — Owner and severity
 
