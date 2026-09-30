@@ -91,7 +91,8 @@ and tell the user which other logged-in account probably has access — suggest 
 
 Ask the user (one `AskUserQuestion`):
 - **Link an existing tl-control-system `config.yaml`** → ask for its path, then
-  `ln -s <path> ~/.claude/team-lead.yaml`.
+  `ln -s <path> ~/.claude/team-lead.yaml`. Later edits (e.g. adding `github.account`) go to
+  the link's **target** path — file-edit tools refuse to write through a symlink.
 - **Create a new one** → gather, with as little typing as possible:
   - `github.org` + `repos`: detect from `git remote` of the cwd and ask to confirm/extend.
   - `identity.github_login`: `gh api user --jq .login` (via the chosen account).

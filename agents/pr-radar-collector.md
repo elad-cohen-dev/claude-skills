@@ -70,6 +70,7 @@ SUGGESTED ACTIONS
 1. <verb> <target> — <why>     (e.g. "Nudge @x on repo#12 — review pending 4d")
 ```
 
-Rules: omit empty sections; use GitHub logins (the caller maps names); at most 6
+Rules: section counts must equal the items listed; mark actions only a human may take
+(merge, approve, close, rebase own PR) with a leading "(you)"; omit empty sections; use GitHub logins (the caller maps names); at most 6
 suggested actions, highest leverage first (unblocking others beats your own PRs);
 when `focus` is set, only show items matching it plus the review-load line.
