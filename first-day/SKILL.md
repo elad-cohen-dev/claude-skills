@@ -12,6 +12,8 @@ company facts or judgment**. It's resumable: progress lives in the notes file (S
 so a second run picks up where the first stopped.
 
 Rules:
+- `--dry-run` (or "dry run" in the arguments): run every read-only check for real, show
+  each step's exact diffs/commands and its prompt, but write nothing and run no logins.
 - One step at a time. Before each, say what it changes and ask (`AskUserQuestion`:
   Do it / Skip / Later). Never batch silent writes.
 - **Never ask for, read, echo or store secrets** (tokens, passwords, SSO codes). Interactive
@@ -41,6 +43,12 @@ Create `~/Documents/<Co>/first-week.md` (ask for another location if preferred) 
 
 ## Step 1 — Git identity per folder
 
+First check `git config --global user.email`. If it's a **work** address (a previous
+company's domain — common when the laptop or habits carry over), propose fixing that first:
+set the global email to the personal one, and pin the old company's identity to its folder
+with its own `includeIf` + `~/.gitconfig-<oldco>` (ask which folder(s) hold its repos, e.g.
+`~/dev/<oldco>/` or the individual repo dirs). Show the diff before writing.
+
 Keep the global identity personal. Add a work identity for `~/dev/<co>/`:
 
 ```ini
@@ -66,21 +74,40 @@ so the two accounts never fight over the credential helper.
 
 1. `ssh-keygen -t ed25519 -C "<work email>" -f ~/.ssh/id_ed25519_<co>` — the user runs it
    (`! ...`) so they choose the passphrase.
-2. Append to `~/.ssh/config`:
-   ```
-   Host github.com
-     AddKeysToAgent yes
-     UseKeychain yes
-     IdentityFile ~/.ssh/id_ed25519_<co>
-   ```
-   (If a personal SSH key already uses `github.com`, use a `Host github-<co>` alias with
-   `HostName github.com` and set `insteadOf` to `git@github-<co>:<org>/` instead.)
+2. Check what already owns `github.com`: `grep -nE '^\s*(Host|IdentityFile)' ~/.ssh/config`
+   (names only — never read key files) and `ssh -T -o BatchMode=yes git@github.com`, which
+   prints the account the current key authenticates as.
+   - **Nothing configured** → append:
+     ```
+     Host github.com
+       AddKeysToAgent yes
+       UseKeychain yes
+       IdentityFile ~/.ssh/id_ed25519_<co>
+     ```
+   - **`github.com` already belongs to another account** (personal *or* a previous company's)
+     → leave that block untouched and add an alias:
+     ```
+     Host github-<co>
+       HostName github.com
+       AddKeysToAgent yes
+       UseKeychain yes
+       IdentityFile ~/.ssh/id_ed25519_<co>
+       IdentitiesOnly yes
+     ```
+     `IdentitiesOnly yes` stops ssh from offering the other key first. Then change the
+     Step 1 `insteadOf` to `[url "git@github-<co>:<org>/"] insteadOf = https://github.com/<org>/`
+     (and `git@github.com:<org>/` too, so copied SSH clone URLs also route through the alias).
 3. User runs `! gh auth login` (GitHub.com → HTTPS → browser) with the **work** account,
    then `! gh ssh-key add ~/.ssh/id_ed25519_<co>.pub --title "<co> laptop"`.
 4. Switch the active account back to personal: `gh auth switch -u <personal>`; work reads
    go through `github.account` in team-lead.yaml (Step 5).
-5. Verify: `ssh -T git@github.com` and `gh auth status`. If the org enforces SSO, remind the
-   user to authorize the SSH key and token for the org on github.com.
+5. Verify **both** setups — the new one works *and* the old one still does:
+   - `ssh -T git@github-<co>` (or `git@github.com` if no alias) → `Hi <work-login>!`
+   - `ssh -T git@github.com` → still the previous account, if one was there
+   - `gh auth status` → every account listed, the personal one active
+   - after the first clone in Step 6: `git -C ~/dev/<co>/<repo> remote -v` shows the alias host
+   If the org enforces SSO, remind the user to authorize the SSH key and token for the org
+   on github.com (Settings → SSH keys / Tokens → Configure SSO).
 
 ## Step 3 — Claude Code for this company
 
