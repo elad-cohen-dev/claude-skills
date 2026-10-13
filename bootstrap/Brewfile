@@ -1,0 +1,31 @@
+# Day-one Mac setup — `brew bundle --file=bootstrap/Brewfile`
+# Company-managed tools (MDM, EDR, VPN, display drivers) are left to IT.
+
+# ── CLI ───────────────────────────────────────────────────────────
+brew "git"
+brew "gh"
+brew "jq"
+brew "ripgrep"
+brew "tmux"
+brew "uv"
+brew "pyenv"
+brew "poetry"
+brew "nvm"
+brew "awscli"
+brew "kubectl"
+brew "pre-commit"
+brew "docker-compose"
+
+# ── Editors & terminal ───────────────────────────────────────────
+cask "ghostty"
+cask "pycharm"
+
+# ── Dev tools ────────────────────────────────────────────────────
+cask "docker-desktop"
+cask "mongodb-compass"
+
+# ── Productivity ─────────────────────────────────────────────────
+cask "raycast"
+cask "slack"
+cask "zoom"
+cask "google-chrome"

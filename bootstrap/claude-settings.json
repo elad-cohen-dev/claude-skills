@@ -1,0 +1,10 @@
+{
+  "model": "opus[1m]",
+  "effortLevel": "high",
+  "tui": "fullscreen",
+  "statusLine": { "type": "command", "command": "ccusage statusline", "padding": 0 },
+  "remoteControlAtStartup": true,
+  "agentPushNotifEnabled": true,
+  "env": { "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1" },
+  "permissions": { "allow": ["WebSearch", "WebFetch", "Bash(date:*)"] }
+}
