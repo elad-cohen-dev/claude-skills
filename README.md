@@ -25,7 +25,7 @@ curl -fsSL https://raw.githubusercontent.com/elad-cohen-dev/claude-skills/main/b
 - Claude Code, with portable settings and plugins
 - every skill and agent in this repo, symlinked into `~/.claude`
 
-Then run `/first-day` in Claude Code for the parts that need logins or company facts: work git identity, SSH key and work gh account, connectors, team-lead config, repos, cloud login, and a first-week notes file. The human side is in [`bootstrap/FIRST-DAY.md`](bootstrap/FIRST-DAY.md).
+Then run `/first-day` in Claude Code for the parts that need logins or company facts: work git identity, SSH key and work gh account, connectors, team-lead config, repos, cloud login, and a first-week notes file. The human side is in [`bootstrap/FIRST-DAY.md`](bootstrap/FIRST-DAY.md). Leaving? `/last-day` is the mirror image: it inventories the company footprint, hands over work, and cleans up with approval at every step.
 
 ## Team-lead toolkit
 
@@ -60,6 +60,7 @@ new ticket) is shown first and needs your approval.
 - **feature-composer** — Transform a PRD document, prototype URL, and empty Jira epic into a fully structured, ticketed implementation plan.
 - **first-day** — Day-one setup at a new company: identity, SSH, accounts, connectors, repos, notes.
 - **frontend-patterns** — Angular frontend development patterns, conventions, and best practices.
+- **last-day** — Offboarding: inventory the company footprint, hand over work, keep what is yours, revoke and clean up.
 - **output-validator** — Validate a live UI implementation against Figma designs and acceptance criteria using browser screenshots and visual comparison.
 - **pr-radar** — On-demand triage of your team's open PRs, with drafted nudges.
 - **sprint-pulse** — On-demand sprint health check with a short standup mode.
