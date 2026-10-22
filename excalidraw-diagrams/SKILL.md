@@ -29,9 +29,9 @@ The user's HLD standard is **hand-drawn Excalidraw diagrams embedded inline as i
 import sys; sys.path.insert(0, str(Path.home() / ".claude/skills/excalidraw-diagrams/scripts"))
 from excal_lib import Scene, lifelines, msg, BLUE, PURPLE, GREEN, TEAL, ORANGE, S_BLUE, S_PURPLE, S_GREEN, S_TEAL
 s = Scene()
-s.zone("zfe", 20, 60, 340, 560, "apps/platform", "#dbe4ff", S_BLUE, S_BLUE)
+s.zone("zfe", 20, 60, 340, 560, "apps/web", "#dbe4ff", S_BLUE, S_BLUE)
 s.box("ov", 45, 130, 290, 110, "Overview table\nstatus column", BLUE)
-s.box("api", 445, 130, 290, 110, "platform-api", GREEN)
+s.box("api", 445, 130, 290, 110, "orders-api", GREEN)
 s.arrow("a1", [(335, 185), (445, 185)], "ov", "api", label="PATCH field")
 s.save("architecture")          # -> ./architecture.excalidraw
 ```

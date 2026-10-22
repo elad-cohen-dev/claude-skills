@@ -60,6 +60,7 @@ new ticket) is shown first and needs your approval.
 - **feature-composer** — Transform a PRD document, prototype URL, and empty Jira epic into a fully structured, ticketed implementation plan.
 - **first-day** — Day-one setup at a new company: identity, SSH, accounts, connectors, repos, notes.
 - **frontend-patterns** — Angular frontend development patterns, conventions, and best practices.
+- **hld** — Write a High-Level Design from epic to a reviewed Confluence page with diagrams and linked tickets.
 - **last-day** — Offboarding: inventory the company footprint, hand over work, keep what is yours, revoke and clean up.
 - **output-validator** — Validate a live UI implementation against Figma designs and acceptance criteria using browser screenshots and visual comparison.
 - **pr-radar** — On-demand triage of your team's open PRs, with drafted nudges.

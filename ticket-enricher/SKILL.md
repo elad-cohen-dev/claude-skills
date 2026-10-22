@@ -37,7 +37,7 @@ Investigate the codebase using Read, Glob, and Grep tools:
 - Whether functionality already exists or must be created
 - Where in the codebase this should be implemented
 
-Plan using Angular 17 best practices:
+Plan following the conventions of the layer being changed (the repo's house-rules skills or CLAUDE.md, if it has them):
 - Generic, modular, secure architecture
 - Performance optimizations
 - Code reuse strategies

@@ -134,6 +134,9 @@ Each is optional — offer only those whose systems the company uses:
   `~/dev/<co>/CLAUDE.md` (the team's 2-3 best-maintained repos, from Step 6); it overrides the
   placeholders whenever Claude runs under `~/dev/<co>/`.
 - **epic-breakdown / feature-composer**: nothing to configure — they discover field ids.
+- **hld**: add a `## HLD` section to `~/dev/<co>/CLAUDE.md` (template + reference HLD URLs,
+  space, roles, request path, deploy-config repo, log/event indexes, E2E suites) — the skill
+  lists the fields and asks for any that are missing.
 
 ## Step 5 — Team-lead config
 
